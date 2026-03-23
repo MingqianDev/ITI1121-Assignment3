@@ -1,3 +1,4 @@
+import java.util.Random;
 
 /**
  *  Deck represents a deck of playing cards and contains 52 regular cards.
@@ -13,6 +14,16 @@ public class Deck {
      */
     public Deck() {
         // YOUR CODE COMES HERE
+        this.deck = new Card[52];
+        this.number = 0;
+
+        // loop for the 4 suits
+        for (int i = 0; i < 4; i++) {
+            // loop for the 13 values
+            for (int j = 0; j < 13; j++) {
+                deck[j + 13 * i] = new Card(j + 1, i);
+            }
+        }
  }
 
 
@@ -22,6 +33,15 @@ public class Deck {
      */
     public void shuffle() {
         // YOUR CODE COMES HERE
+        number = 0;
+
+        for (int i = deck.length - 1; i > 0; i--) {
+            int j = (int)(Math.random() * (i + 1));
+
+            Card temp = deck[i];
+            deck[i] = deck[j];
+            deck[j] = temp;
+        }
     }
 
     /**
@@ -29,6 +49,7 @@ public class Deck {
      */
     public int numberLeft() {
         // YOUR CODE COMES HERE
+        return 52 - number;
     }
 
     /**
@@ -40,5 +61,10 @@ public class Deck {
      */
     public Card take() {
         // YOUR CODE COMES HERE
+        if (numberLeft() <= 0) {
+            throw new IllegalStateException("No card are left");
+        }
+
+        return deck[number++];
     }
 } // end class Deck
